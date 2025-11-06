@@ -40,7 +40,8 @@ const CartItem = ({ onContinueShopping }) => {
     if (item.quantity > 1) {
       let newQuantity = item.quantity;
       dispatch(updateQuantity({ ...item, quantity: newQuantity - 1 })); // Dispatch the action to update quantity (Redux action)
-    } else if (item.quantity == 1) {
+    } else if (item.quantity === 1) {
+      console.log("remove");
       dispatch(removeItem(item));
     }
   };

@@ -9,15 +9,21 @@ function ProductList({ onHomeClick }) {
   const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
   const [addedToCart, setAddedToCart] = useState({});
   const dispatch = useDispatch();
-  const cart = useSelector((state) => state.cart.items);
+  const CartItems = useSelector((state) => state.cart.items);
 
-  const calculateCartCount = () => {
-    let cartCount = 0;
-    cart.forEach((item) => {
-      let itemQty = item.quantity;
-      cartCount += itemQty;
-    });
-    return cartCount;
+  //   const calculateCartCount = () => {
+  //     let cartCount = 0;
+  //     cart.forEach((item) => {
+  //       let itemQty = item.quantity;
+  //       cartCount += itemQty;
+  //     });
+  //     return cartCount;
+  //   };
+
+  const calculateTotalQuantity = () => {
+    return CartItems
+      ? CartItems.reduce((total, item) => total + item.quantity, 0)
+      : 0;
   };
 
   const plantsArray = [
@@ -367,7 +373,7 @@ function ProductList({ onHomeClick }) {
                   ></path>
                 </svg>
                 <div className="cart_quantity_count">
-                  {calculateCartCount()}
+                  {calculateTotalQuantity()}
                 </div>
               </h1>
             </a>
@@ -416,13 +422,13 @@ function ProductList({ onHomeClick }) {
                         {/* Display plant cost */}
                         <button
                           className={
-                            cart.some((item) => item.name === plant.name)
+                            CartItems.some((item) => item.name === plant.name)
                               ? "product-button added-to-cart"
                               : "product-button"
                           }
                           onClick={() => handleAddToCart(plant)} // Handle adding plant to cart
                         >
-                          {cart.some((item) => item.name === plant.name)
+                          {CartItems.some((item) => item.name === plant.name)
                             ? "Added to Cart"
                             : "Add to Cart"}
                         </button>
