@@ -7,10 +7,6 @@ const CartItem = ({ onContinueShopping }) => {
   const cart = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log("Cart Items:", cart);
-  }, [cart]);
-
   // Calculate total amount for all products in the cart
   const calculateTotalAmount = () => {
     let totalAmount = 0;
@@ -30,18 +26,15 @@ const CartItem = ({ onContinueShopping }) => {
   };
 
   const handleIncrement = (item) => {
-    console.log("itemQty-beforeInc: ", item.quantity);
     let newQuantity = item.quantity;
     dispatch(updateQuantity({ ...item, quantity: newQuantity + 1 })); // Dispatch the action to update quantity (Redux action)
   };
 
   const handleDecrement = (item) => {
-    console.log("itemQty-beforeDec: ", item.quantity);
     if (item.quantity > 1) {
       let newQuantity = item.quantity;
       dispatch(updateQuantity({ ...item, quantity: newQuantity - 1 })); // Dispatch the action to update quantity (Redux action)
     } else if (item.quantity === 1) {
-      console.log("remove");
       dispatch(removeItem(item));
     }
   };
